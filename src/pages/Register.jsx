@@ -66,9 +66,9 @@ export default function Register() {
           </Button>
         </form>
 
-        <button className="auth-google-btn" onClick={handleGoogle}>
+        {/* <button className="auth-google-btn" onClick={handleGoogle}>
           <FcGoogle size={18} /> Continue with Google
-        </button>
+        </button> */}
 
         <p className="auth-card__footer">
           Already have an account? <Link to="/login">Log In</Link>
