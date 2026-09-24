@@ -1,1 +1,0 @@
-import{a as e}from"./icons-CGZ4478r.js";import{s as t}from"./index-CreA5_Iw.js";var n=t();function r({message:t=`Something went wrong. Please try again.`,onRetry:r}){return(0,n.jsxs)(`div`,{className:`error-message`,children:[(0,n.jsx)(e,{size:30}),(0,n.jsx)(`p`,{children:t}),r&&(0,n.jsx)(`button`,{className:`error-message__retry`,onClick:r,children:`Retry`})]})}export{r as t};
