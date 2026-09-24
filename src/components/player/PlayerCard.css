@@ -1,0 +1,29 @@
+.player-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px 14px;
+  gap: 6px;
+  color: var(--text-primary);
+}
+
+.player-card__img {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--card-border);
+  margin-bottom: 6px;
+}
+
+.player-card__name {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.player-card__country,
+.player-card__role {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}

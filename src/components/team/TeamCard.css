@@ -1,0 +1,30 @@
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 14px;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.team-card__logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.team-card__flag {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.team-card__name {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.team-card__status {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+}

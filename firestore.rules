@@ -1,0 +1,104 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // Admin status comes ONLY from a Firebase custom claim set server-side
+    // (e.g. via a Cloud Function). Never trust a client-writable field.
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.role == 'admin';
+    }
+
+    // --- users/{uid} -------------------------------------------------------
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow create: if isOwner(uid);
+      allow update: if isOwner(uid) && !('role' in request.resource.data.diff(resource.data).affectedKeys());
+      allow delete: if false;
+
+      match /favorites/{favId} {
+        allow read, write: if isOwner(uid);
+      }
+
+      match /followedMatches/{matchId} {
+        allow read, write: if isOwner(uid);
+      }
+
+      // FCM device tokens — written by messagingService.js when the user
+      // enables notifications, read only by the checkFollowedMatches
+      // Cloud Function (which uses the Admin SDK and bypasses these rules
+      // entirely, so no explicit function-read rule is needed here).
+      match /fcmTokens/{tokenId} {
+        allow read, write: if isOwner(uid);
+      }
+    }
+
+    // --- matchStatusCache/{matchId} ------------------------------------------
+    // Written only by the checkFollowedMatches Cloud Function (Admin SDK,
+    // bypasses rules). No client ever needs to read or write this directly.
+    match /matchStatusCache/{matchId} {
+      allow read, write: if false;
+    }
+
+    // --- news/{newsId} -------------------------------------------------------
+    match /news/{newsId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if isSignedIn()
+          && request.resource.data.userId == request.auth.uid
+          && request.resource.data.message is string
+          && request.resource.data.message.size() > 0
+          && request.resource.data.message.size() <= 500;
+        allow delete: if isSignedIn() &&
+          (resource.data.userId == request.auth.uid || isAdmin());
+        allow update: if false;
+      }
+    }
+
+    // --- matches/{matchId} (comments only; match data itself comes from the API) --
+    match /matches/{matchId} {
+      allow read: if true;
+
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if isSignedIn()
+          && request.resource.data.userId == request.auth.uid
+          && request.resource.data.message is string
+          && request.resource.data.message.size() > 0
+          && request.resource.data.message.size() <= 500;
+        allow delete: if isSignedIn() &&
+          (resource.data.userId == request.auth.uid || isAdmin());
+        allow update: if false;
+      }
+    }
+
+    // --- polls/{pollId} ------------------------------------------------------
+    match /polls/{pollId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+
+      match /votes/{uid} {
+        allow read: if isOwner(uid) || isAdmin();
+        // A user may only ever create their own vote doc once; no edits.
+        allow create: if isOwner(uid);
+        allow update, delete: if false;
+      }
+    }
+
+    // --- reports/{reportId} --------------------------------------------------
+    match /reports/{reportId} {
+      allow create: if isSignedIn() && request.resource.data.reporterUid == request.auth.uid;
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}

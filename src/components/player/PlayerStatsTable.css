@@ -1,0 +1,37 @@
+.player-stats-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+}
+
+.player-stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  min-width: 480px;
+}
+
+.player-stats-table th {
+  text-align: right;
+  padding: 10px 12px;
+  color: var(--text-tertiary);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  background: var(--bg-elevated);
+}
+
+.player-stats-table th:first-child,
+.player-stats-table td:first-child {
+  text-align: left;
+}
+
+.player-stats-table td {
+  padding: 9px 12px;
+  text-align: right;
+  border-top: 1px solid var(--border);
+}
+
+.player-stats-table__format {
+  font-weight: 700;
+  color: var(--accent-text);
+}

@@ -1,0 +1,18 @@
+{
+  "name": "cricpulse-functions",
+  "description": "Cloud Functions for CricPulse: admin role management + Cricket/Weather API proxy",
+  "private": true,
+  "engines": { "node": "20" },
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "deploy": "firebase deploy --only functions"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.9.0"
+  }
+}

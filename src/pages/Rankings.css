@@ -1,0 +1,55 @@
+.rankings-page {
+  padding: 32px 0 60px;
+}
+
+.rankings-page h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.rankings-page__tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.rankings-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  margin-top: 8px;
+}
+
+.rankings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  min-width: 420px;
+}
+
+.rankings-table th {
+  text-align: left;
+  padding: 12px 16px;
+  color: var(--text-tertiary);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  background: var(--bg-elevated);
+}
+
+.rankings-table td {
+  padding: 11px 16px;
+  border-top: 1px solid var(--border);
+}
+
+.rankings-table__rank {
+  font-weight: 800;
+  color: var(--accent-text);
+  width: 60px;
+}
+
+.rankings-table__name {
+  font-weight: 600;
+}

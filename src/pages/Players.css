@@ -1,0 +1,60 @@
+.players-page {
+  padding: 32px 0 60px;
+}
+
+.players-page__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.players-page__head h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.players-page__compare-link {
+  color: var(--accent-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.players-page__search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-bottom: 24px;
+  max-width: 420px;
+  color: var(--text-tertiary);
+}
+
+.players-page__search input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.players-page__search input:focus {
+  outline: none;
+}
+
+.players-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+}
+
+.players-page__load-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}

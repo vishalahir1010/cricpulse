@@ -1,0 +1,90 @@
+.match-details-page {
+  padding-bottom: 60px;
+}
+
+.match-header {
+  background: linear-gradient(180deg, var(--bg-secondary), var(--bg-primary));
+  border-bottom: 1px solid var(--border);
+  padding: 28px 0;
+}
+
+.match-header__series {
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.match-header__live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--live-red);
+}
+
+.match-header__teams {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 16px 0 10px;
+  flex-wrap: wrap;
+}
+
+.match-header__team {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.match-header__team span {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.match-header__team strong {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.match-header__vs {
+  color: var(--text-tertiary);
+  font-size: 0.85rem;
+}
+
+.match-header__status {
+  color: var(--accent-text);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.match-header__meta {
+  display: flex;
+  gap: 16px;
+  color: var(--text-tertiary);
+  font-size: 0.82rem;
+  flex-wrap: wrap;
+}
+
+.match-header__follow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 9px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.match-header__follow:hover {
+  border-color: var(--accent);
+  color: var(--accent-text);
+}

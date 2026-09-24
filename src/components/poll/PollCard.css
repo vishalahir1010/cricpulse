@@ -1,0 +1,70 @@
+.poll-card {
+  padding: 20px;
+}
+
+.poll-card h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.poll-card__options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.poll-card__option {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  text-align: left;
+  overflow: hidden;
+}
+
+.poll-card__option:not(:disabled):hover {
+  border-color: var(--accent);
+}
+
+.poll-card__option-label {
+  position: relative;
+  z-index: 1;
+  font-weight: 600;
+}
+
+.poll-card__bar-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+
+.poll-card__bar {
+  position: absolute;
+  inset: 0;
+  right: auto;
+  background: var(--accent-glow);
+  transition: width var(--transition-med);
+}
+
+.poll-card__pct {
+  position: relative;
+  z-index: 1;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent-text);
+}
+
+.poll-card__total {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}

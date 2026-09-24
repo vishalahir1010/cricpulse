@@ -1,0 +1,24 @@
+.team-details-page {
+  padding: 32px 0 60px;
+}
+
+.team-details-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.team-details-header__flag {
+  font-size: 3rem;
+}
+
+.team-details-header h1 {
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.team-details-header__status {
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+}

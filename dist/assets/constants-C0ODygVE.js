@@ -1,0 +1,1 @@
+var e=[`Test`,`ODI`,`T20`,`International`,`League`,`Women`],t=[`All`,`Live`,`Upcoming`,`Completed`],n=[`Match Reports`,`Interviews`,`Analysis`,`Transfers`,`General`],r=[`Test`,`ODI`,`T20`],i=[`Teams`,`Batters`,`Bowlers`,`All-rounders`];export{r as a,i,t as n,n as r,e as t};

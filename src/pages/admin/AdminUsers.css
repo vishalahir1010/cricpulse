@@ -1,0 +1,62 @@
+.admin-users h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.admin-users__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.admin-users__stat {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-users__stat span {
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+}
+
+.admin-users__stat strong {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--accent-text);
+}
+
+.admin-users__grant-form {
+  margin-top: 24px;
+  padding: 20px;
+  max-width: 420px;
+}
+
+.admin-users__grant-form h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.admin-users__grant-form p {
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  margin-bottom: 14px;
+}
+
+.admin-users__grant-row {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-users__grant-row input {
+  flex: 1;
+  background: var(--bg-elevated);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}

@@ -1,0 +1,25 @@
+.commentary-feed {
+  display: flex;
+  flex-direction: column;
+}
+
+.commentary-feed__item {
+  display: flex;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.commentary-feed__over {
+  flex-shrink: 0;
+  width: 44px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--accent-text);
+}
+
+.commentary-feed__item p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}

@@ -183,4 +183,5 @@ firebase deploy
 - Push notifications for followed matches
 - Redux Toolkit if global state grows beyond what Context comfortably handles
 #   c r i c p l u s  
+ #   c r i c p u l s e  
  

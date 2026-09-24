@@ -1,0 +1,1 @@
+import{g as e}from"./icons-CGZ4478r.js";import{s as t}from"./index-CreA5_Iw.js";var n=t();function r({icon:t=e,title:r=`Nothing here yet`,message:i,action:a}){return(0,n.jsxs)(`div`,{className:`empty-state`,children:[(0,n.jsx)(t,{size:36}),(0,n.jsx)(`h3`,{children:r}),i&&(0,n.jsx)(`p`,{children:i}),a]})}export{r as t};

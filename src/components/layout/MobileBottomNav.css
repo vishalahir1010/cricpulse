@@ -1,0 +1,39 @@
+.bottom-nav {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-height: var(--bottom-nav-height);
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    z-index: 100;
+    /* box-sizing: border-box (global) means padding is carved out of a
+       fixed height, not added to it — using min-height instead lets the
+       safe-area inset add extra room below the icons on notched phones
+       instead of squeezing them into whatever's left. */
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .bottom-nav__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    flex: 1;
+    padding: 6px 0;
+  }
+
+  .bottom-nav__item--active {
+    color: var(--accent-text);
+  }
+}

@@ -1,0 +1,38 @@
+.series-card {
+  display: block;
+  padding: 20px;
+  color: var(--text-primary);
+}
+
+.series-card__name {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.35;
+}
+
+.series-card__meta {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.series-card__format {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--accent-text);
+  background: var(--accent-glow);
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.series-card__dates {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.series-card__matches {
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}

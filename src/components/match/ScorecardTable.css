@@ -1,0 +1,56 @@
+.scorecard-inning {
+  margin-bottom: 32px;
+}
+
+.scorecard-inning__title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--accent-text);
+}
+
+.scorecard-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 18px;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+}
+
+.scorecard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  min-width: 420px;
+}
+
+.scorecard-table th {
+  text-align: left;
+  padding: 10px 12px;
+  color: var(--text-tertiary);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  background: var(--bg-elevated);
+}
+
+.scorecard-table th:not(:first-child),
+.scorecard-table td:not(:first-child) {
+  text-align: right;
+}
+
+.scorecard-table td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--border);
+}
+
+.scorecard-table__name {
+  font-weight: 600;
+  display: block;
+}
+
+.scorecard-table__dismissal {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  font-weight: 400;
+}
