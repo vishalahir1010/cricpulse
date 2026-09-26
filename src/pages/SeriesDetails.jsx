@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useFetch } from '../hooks/useFetch';
 import { getSeriesDetails } from '../services/api/cricketApi';
 import MatchCard from '../components/match/MatchCard';
@@ -7,6 +7,7 @@ import { MatchSkeleton } from '../components/common/Skeleton';
 import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
 import { formatMatchDate } from '../utils/formatters';
+import { FiArrowLeft, FiCalendar, FiAward } from 'react-icons/fi';
 import './SeriesDetails.css';
 
 const TABS = ['Overview', 'Matches', 'Points Table', 'Squads', 'Statistics'];
@@ -28,10 +29,24 @@ export default function SeriesDetails() {
 
   return (
     <div className="container series-details-page">
-      <h1>{series.info?.name}</h1>
-      <p className="series-details-page__dates">
-        {formatMatchDate(series.info?.startdate)} – {formatMatchDate(series.info?.enddate)} · {series.info?.matches} matches
-      </p>
+      <Link to="/series" className="match-details__back-link">
+        <FiArrowLeft size={16} /> Back to Series
+      </Link>
+
+      <div className="series-details-hero glass-card">
+        <div className="series-details-hero__top">
+          <div className="series-details-hero__icon">
+            <FiAward size={26} />
+          </div>
+          <div>
+            <h1 className="page-title">{series.info?.name}</h1>
+            <p className="series-details-hero__dates">
+              <FiCalendar size={14} />
+              {formatMatchDate(series.info?.startdate)} – {formatMatchDate(series.info?.enddate)} · {series.info?.matches} matches
+            </p>
+          </div>
+        </div>
+      </div>
 
       <div className="match-tabs">
         {TABS.map((tab) => (

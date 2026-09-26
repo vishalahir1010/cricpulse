@@ -52,19 +52,22 @@ export default function News() {
     }
   };
 
-  const featured = articles.find((a) => a.featured);
+  const featured = articles.find((a) => a.featured) || articles[0];
   const rest = articles.filter((a) => a.id !== featured?.id);
 
   return (
     <div className="container news-page">
-      <h1>News</h1>
+      <div className="page-header">
+        <h1 className="page-title">Latest Cricket News</h1>
+        <p className="page-subtitle">Stay informed with match reports, editorial insights, and breaking cricket stories.</p>
+      </div>
 
       <div className="news-page__filters">
         <button
           className={`filter-chip${!category ? ' filter-chip--active' : ''}`}
           onClick={() => setCategory(null)}
         >
-          All
+          All News
         </button>
         {NEWS_CATEGORIES.map((c) => (
           <button
@@ -91,19 +94,27 @@ export default function News() {
 
       {!loading && !error && articles.length > 0 && (
         <>
-          {featured && (
-            <div className="news-page__featured">
-              <NewsCard article={featured} />
+          <div className="news-layout">
+            {featured && (
+              <div className="news-layout__featured">
+                <NewsCard article={featured} featured={true} />
+              </div>
+            )}
+            <div className="news-layout__side-grid">
+              {rest.slice(0, 4).map((a) => <NewsCard key={a.id} article={a} />)}
+            </div>
+          </div>
+
+          {rest.length > 4 && (
+            <div className="news-grid" style={{ marginTop: 24 }}>
+              {rest.slice(4).map((a) => <NewsCard key={a.id} article={a} />)}
             </div>
           )}
-          <div className="news-grid">
-            {rest.map((a) => <NewsCard key={a.id} article={a} />)}
-          </div>
 
           {hasMore && (
             <div className="news-page__load-more">
               <Button variant="outline" onClick={handleLoadMore} disabled={loadingMore}>
-                {loadingMore ? 'Loading…' : 'Load more'}
+                {loadingMore ? 'Loading…' : 'Load more news'}
               </Button>
             </div>
           )}

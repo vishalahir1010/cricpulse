@@ -1,56 +1,87 @@
 .scorecard-inning {
   margin-bottom: 32px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
 }
 
 .scorecard-inning__title {
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 14px;
-  color: var(--accent-text);
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scorecard-inning__title::before {
+  content: '';
+  width: 4px;
+  height: 18px;
+  background: var(--primary-green);
+  border-radius: 2px;
+  display: inline-block;
 }
 
 .scorecard-table-wrap {
   overflow-x: auto;
-  margin-bottom: 18px;
-  border: 1px solid var(--card-border);
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
+}
+
+.scorecard-table-wrap:last-child {
+  margin-bottom: 0;
 }
 
 .scorecard-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.85rem;
-  min-width: 420px;
+  font-size: 0.88rem;
+  min-width: 480px;
 }
 
 .scorecard-table th {
   text-align: left;
-  padding: 10px 12px;
-  color: var(--text-tertiary);
-  font-size: 0.72rem;
+  padding: 11px 14px;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.4px;
-  background: var(--bg-elevated);
+  letter-spacing: 0.5px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
 }
 
 .scorecard-table th:not(:first-child),
 .scorecard-table td:not(:first-child) {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 .scorecard-table td {
-  padding: 9px 12px;
+  padding: 12px 14px;
   border-top: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.scorecard-table tbody tr:hover {
+  background: var(--badge-bg);
 }
 
 .scorecard-table__name {
   font-weight: 600;
   display: block;
+  color: var(--text-primary);
 }
 
 .scorecard-table__dismissal {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   color: var(--text-tertiary);
   font-weight: 400;
+  margin-top: 2px;
 }

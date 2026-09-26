@@ -1,6 +1,7 @@
 .admin-comments h2 {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
+  color: var(--color-text-primary, #111827);
   margin-bottom: 16px;
 }
 
@@ -8,26 +9,50 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 16px;
-  margin-bottom: 10px;
+  padding: 16px 20px;
+  border-radius: var(--radius-md, 12px);
+  margin-bottom: 12px;
+  transition: all var(--transition-fast);
 }
 
 .admin-comments__item strong {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
+  margin-bottom: 2px;
 }
 
 .admin-comments__item span {
-  font-size: 0.75rem;
-  color: var(--text-tertiary);
+  font-size: 0.8rem;
+  color: var(--color-text-secondary, #64748B);
 }
 
 .admin-comments__actions {
   display: flex;
-  gap: 10px;
-  color: var(--text-tertiary);
+  gap: 8px;
 }
 
-.admin-comments__actions button:hover {
-  color: var(--accent-text);
+.admin-comments__actions button {
+  background: var(--color-bg-alt, #F1F5F9);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm, 8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary, #64748B);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.admin-comments__actions button:first-child:hover {
+  background: var(--color-soft-green, #DCFCE7);
+  color: var(--color-primary-dark, #064E3B);
+}
+
+.admin-comments__actions button:last-child:hover {
+  background: #FEE2E2;
+  color: var(--color-live, #EF4444);
 }

@@ -1,8 +1,9 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { INTERNATIONAL_TEAMS, getTeamFlag } from '../data/teams';
 import StaticDataBanner from '../components/common/StaticDataBanner';
 import { TEAMS_LAST_VERIFIED } from '../data/teams';
 import EmptyState from '../components/common/EmptyState';
+import { FiArrowLeft } from 'react-icons/fi';
 import './TeamDetails.css';
 
 export default function TeamDetails() {
@@ -12,13 +13,19 @@ export default function TeamDetails() {
 
   return (
     <div className="container team-details-page">
+      <Link to="/teams" className="match-details__back-link">
+        <FiArrowLeft size={16} /> Back to Teams
+      </Link>
+
       {team ? (
         <>
-          <div className="team-details-header">
-            <span className="team-details-header__flag">{getTeamFlag(team.flagCode)}</span>
+          <div className="team-details-hero glass-card">
+            <div className="team-details-hero__flag-wrap">
+              <span className="team-details-hero__flag">{getTeamFlag(team.flagCode)}</span>
+            </div>
             <div>
-              <h1>{team.name}</h1>
-              <span className="team-details-header__status">{team.status}</span>
+              <h1 className="page-title">{team.name}</h1>
+              <span className="team-details-hero__status">{team.status}</span>
             </div>
           </div>
           <StaticDataBanner lastVerified={TEAMS_LAST_VERIFIED} />

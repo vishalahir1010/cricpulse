@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDebounce } from '../hooks/useDebounce';
 import { useFetch } from '../hooks/useFetch';
 import { searchPlayers, getPlayerDetails } from '../services/api/cricketApi';
 import EmptyState from '../components/common/EmptyState';
 import { RANKING_FORMATS } from '../utils/constants';
+import { FiArrowLeft, FiSearch, FiX } from 'react-icons/fi';
 import './PlayerComparison.css';
 
 function avatarFor(player) {
-  return player.playerImg || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(player.name)}&backgroundType=gradientLinear`;
+  return player?.playerImg || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(player?.name || '')}&backgroundType=gradientLinear`;
 }
 
 function PlayerPicker({ label, onSelect, selected }) {
@@ -19,32 +21,43 @@ function PlayerPicker({ label, onSelect, selected }) {
   );
 
   return (
-    <div className="player-picker">
+    <div className="player-picker glass-card">
       <label>{label}</label>
       {selected ? (
         <div className="player-picker__selected">
           <img src={avatarFor(selected)} alt="" className="player-picker__avatar" />
-          <span>{selected.name}</span>
-          <button onClick={() => onSelect(null)}>Change</button>
+          <div className="player-picker__selected-info">
+            <strong>{selected.name}</strong>
+            <span>{selected.country || 'International'}</span>
+          </div>
+          <button className="player-picker__change-btn" onClick={() => onSelect(null)}>
+            <FiX size={14} /> Change
+          </button>
         </div>
       ) : (
-        <>
-          <input
-            placeholder="Search a player..."
-            value={term}
-            onChange={(e) => setTerm(e.target.value)}
-          />
+        <div className="player-picker__input-wrap">
+          <div className="player-picker__search-box">
+            <FiSearch size={14} />
+            <input
+              placeholder="Search a player..."
+              value={term}
+              onChange={(e) => setTerm(e.target.value)}
+            />
+          </div>
           {results?.length > 0 && (
-            <ul className="player-picker__results">
+            <ul className="player-picker__results glass-card">
               {results.slice(0, 6).map((p) => (
                 <li key={p.id} onClick={() => onSelect(p)}>
                   <img src={avatarFor(p)} alt="" className="player-picker__avatar" />
-                  <span className="player-picker__results-text">{p.name} <span>{p.country}</span></span>
+                  <span className="player-picker__results-text">
+                    <strong>{p.name}</strong>
+                    <span>{p.country}</span>
+                  </span>
                 </li>
               ))}
             </ul>
           )}
-        </>
+        </div>
       )}
     </div>
   );
@@ -59,12 +72,12 @@ function statsFor(player, format) {
 const ROWS = [
   ['Matches', 'Matches'],
   ['Runs', 'Runs'],
-  ['Average', 'Average'],
+  ['Batting Average', 'Average'],
   ['Strike Rate', 'SR'],
-  ['Hundreds', '100s'],
-  ['Fifties', '50s'],
+  ['Hundreds (100s)', '100s'],
+  ['Fifties (50s)', '50s'],
   ['Wickets', 'Wickets'],
-  ['Economy', 'Economy'],
+  ['Bowling Economy', 'Economy'],
 ];
 
 export default function PlayerComparison() {
@@ -86,11 +99,18 @@ export default function PlayerComparison() {
 
   return (
     <div className="container comparison-page">
-      <h1>Player Comparison</h1>
+      <Link to="/players" className="match-details__back-link">
+        <FiArrowLeft size={16} /> Back to Players
+      </Link>
+
+      <div className="page-header">
+        <h1 className="page-title">Player Comparison</h1>
+        <p className="page-subtitle">Compare career stats head-to-head across Test, ODI and T20 formats.</p>
+      </div>
 
       <div className="comparison-page__pickers">
-        <PlayerPicker label="Player A" selected={playerA} onSelect={setPlayerA} />
-        <PlayerPicker label="Player B" selected={playerB} onSelect={setPlayerB} />
+        <PlayerPicker label="Select Player A" selected={playerA} onSelect={setPlayerA} />
+        <PlayerPicker label="Select Player B" selected={playerB} onSelect={setPlayerB} />
       </div>
 
       <div className="comparison-page__formats">
@@ -106,29 +126,29 @@ export default function PlayerComparison() {
       </div>
 
       {!playerA || !playerB ? (
-        <EmptyState title="Pick two players" message="Select a player on each side to see a side-by-side comparison." />
+        <EmptyState title="Pick two players" message="Select a player on each side to see a side-by-side career comparison." />
       ) : (
-        <div className="comparison-table-wrap">
+        <div className="comparison-table-wrap glass-card">
           <table className="comparison-table">
             <thead>
               <tr>
-                <th>
+                <th style={{ width: '40%' }}>
                   <img src={avatarFor(detailsA || playerA)} alt="" className="comparison-table__avatar" />
-                  {detailsA?.name || playerA.name}
+                  <span className="comparison-table__player-name">{detailsA?.name || playerA.name}</span>
                 </th>
-                <th>Stat</th>
-                <th>
+                <th style={{ width: '20%' }}>Metric</th>
+                <th style={{ width: '40%' }}>
                   <img src={avatarFor(detailsB || playerB)} alt="" className="comparison-table__avatar" />
-                  {detailsB?.name || playerB.name}
+                  <span className="comparison-table__player-name">{detailsB?.name || playerB.name}</span>
                 </th>
               </tr>
             </thead>
             <tbody>
               {ROWS.map(([label, key]) => (
                 <tr key={key}>
-                  <td>{statsA?.[key] ?? '-'}</td>
+                  <td className="comparison-table__val">{statsA?.[key] ?? '-'}</td>
                   <td className="comparison-table__label">{label}</td>
-                  <td>{statsB?.[key] ?? '-'}</td>
+                  <td className="comparison-table__val">{statsB?.[key] ?? '-'}</td>
                 </tr>
               ))}
             </tbody>

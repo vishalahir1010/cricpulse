@@ -3,13 +3,15 @@
   top: 0;
   z-index: 100;
   height: var(--nav-height);
-  background: rgba(10, 14, 18, 0.75);
-  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
+  transition: background var(--transition-med), border-color var(--transition-med);
 }
 
-[data-theme='light'] .navbar {
-  background: rgba(255, 255, 255, 0.85);
+[data-theme='dark'] .navbar {
+  background: rgba(10, 15, 13, 0.9);
+  border-bottom: 1px solid var(--border);
 }
 
 .navbar__inner {
@@ -17,27 +19,36 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
 }
 
 .navbar__hamburger {
   display: none;
   color: var(--text-primary);
   flex-shrink: 0;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.navbar__hamburger:hover {
+  background: var(--badge-bg);
 }
 
 .navbar__logo {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 1.3rem;
-  letter-spacing: 0.5px;
+  font-size: 1.35rem;
+  letter-spacing: -0.5px;
   color: var(--text-primary);
   white-space: nowrap;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
 }
 
 .navbar__logo span {
-  color: var(--accent-text);
+  color: var(--primary-green);
 }
 
 .navbar__links {
@@ -45,6 +56,7 @@
   align-items: center;
   gap: 4px;
   flex: 1;
+  justify-content: center;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -54,23 +66,42 @@
 }
 
 .navbar__link {
-  font-size: 0.9rem;
+  position: relative;
+  font-size: 0.88rem;
   font-weight: 500;
   color: var(--text-secondary);
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  border-radius: 20px;
   white-space: nowrap;
-  transition: color var(--transition-fast), background var(--transition-fast);
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .navbar__link:hover {
   color: var(--text-primary);
-  background: var(--card-bg);
+  background: var(--badge-bg);
 }
 
 .navbar__link--active {
-  color: var(--accent-text);
-  background: var(--accent-glow);
+  color: var(--primary-green) !important;
+  background: var(--soft-green) !important;
+  font-weight: 600;
+}
+
+[data-theme='dark'] .navbar__link--active {
+  color: #4ADE80 !important;
+  background: rgba(34, 197, 94, 0.16) !important;
+}
+
+.navbar__live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--live-red);
+  display: inline-block;
+  animation: pulse 1.4s infinite;
 }
 
 .navbar__actions {
@@ -84,16 +115,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   color: var(--text-secondary);
-  transition: background var(--transition-fast), color var(--transition-fast);
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
 }
 
 .navbar__icon-btn:hover {
-  background: var(--card-bg);
-  color: var(--accent-text);
+  background: var(--badge-bg);
+  color: var(--text-primary);
+  border-color: var(--card-border);
 }
 
 .navbar__avatar {
@@ -101,6 +134,7 @@
   height: 28px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid var(--primary-green);
 }
 
 @media (max-width: 1024px) {
@@ -112,19 +146,12 @@
   }
 }
 
-/* At the narrowest supported width (320px), hamburger + logo + 3 fixed-size
-   action icons don't fit on one row even with flex-shrink disabled. Trim
-   the chrome instead: drop the search icon (the bottom nav already has a
-   Search tab at this width) and shrink the logo/icon sizes a notch. */
 @media (max-width: 400px) {
   .navbar__logo {
-    font-size: 1.05rem;
+    font-size: 1.15rem;
   }
   .navbar__icon-btn {
-    width: 34px;
-    height: 34px;
-  }
-  .navbar__icon-btn--search {
-    display: none;
+    width: 32px;
+    height: 32px;
   }
 }

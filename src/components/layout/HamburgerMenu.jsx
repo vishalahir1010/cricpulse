@@ -3,6 +3,9 @@ import { FiX } from 'react-icons/fi';
 import './HamburgerMenu.css';
 
 const LINKS = [
+  { to: '/', label: 'Home', end: true },
+  { to: '/live', label: 'Live' },
+  { to: '/matches', label: 'Matches' },
   { to: '/series', label: 'Series' },
   { to: '/teams', label: 'Teams' },
   { to: '/players', label: 'Players' },

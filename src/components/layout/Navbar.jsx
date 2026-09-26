@@ -40,6 +40,7 @@ export default function Navbar({ onMenuClick }) {
               className={({ isActive }) => `navbar__link${isActive ? ' navbar__link--active' : ''}`}
             >
               {link.label}
+              {link.label === 'Live' && <span className="navbar__live-dot" />}
             </NavLink>
           ))}
         </nav>

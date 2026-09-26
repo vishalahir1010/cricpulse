@@ -1,16 +1,22 @@
 :root {
-  --accent: #00e676;
-  --accent-dim: #00c765;
-  --accent-glow: rgba(0, 230, 118, 0.25);
+  --primary-dark: #064E3B;
+  --primary-green: #15803D;
+  --accent-green: #22C55E;
+  --accent: #15803D;
+  --accent-dim: #166534;
+  --accent-glow: rgba(21, 128, 61, 0.15);
+  --soft-green: #DCFCE7;
+  --soft-green-text: #064E3B;
+
+  --live-red: #EF4444;
+  --live-glow: rgba(239, 68, 68, 0.2);
+  --warning: #F59E0B;
 
   --radius-sm: 8px;
   --radius-md: 14px;
-  --radius-lg: 20px;
+  --radius-lg: 18px;
 
-  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-card-hover: 0 12px 32px rgba(0, 0, 0, 0.5);
-
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Inter', sans-serif;
 
   --nav-height: 68px;
@@ -20,46 +26,49 @@
   --transition-med: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Dark (default) */
+/* Light (default visual reference) */
 :root,
-[data-theme='dark'] {
-  --bg-primary: #0a0e12;
-  --bg-secondary: #11161c;
-  --bg-elevated: #161c24;
-  --card-bg: rgba(255, 255, 255, 0.03);
-  --card-border: rgba(255, 255, 255, 0.07);
-  --text-primary: #f5f7fa;
-  --text-secondary: #9aa5b1;
-  --text-tertiary: #6b7684;
-  --border: rgba(255, 255, 255, 0.08);
-  --live-red: #ff4d4f;
+[data-theme='light'] {
+  --bg-primary: #F5F7F6;
+  --bg-secondary: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --card-bg: #FFFFFF;
+  --card-border: #E2E8F0;
+  --text-primary: #111827;
+  --text-secondary: #64748B;
+  --text-tertiary: #94A3B8;
+  --border: #E2E8F0;
+  --accent-text: #15803D;
+  --accent-btn: #15803D;
+  --accent-btn-text: #FFFFFF;
+  --accent-btn-hover: #064E3B;
+  --badge-bg: #F1F5F9;
+  --badge-text: #475569;
 
-  /* Text/link color: bright accent reads fine straight off a near-black
-     background, so it can just reuse --accent here. */
-  --accent-text: var(--accent);
+  --shadow-card: 0 2px 6px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --shadow-card-hover: 0 12px 24px -6px rgba(0, 0, 0, 0.08), 0 4px 8px -4px rgba(0, 0, 0, 0.04);
 }
 
-/* Light */
-[data-theme='light'] {
-  --bg-primary: #f4f6f8;
-  --bg-secondary: #ffffff;
-  --bg-elevated: #ffffff;
-  --card-bg: #ffffff;
-  --card-border: rgba(0, 0, 0, 0.08);
-  --text-primary: #10151b;
-  --text-secondary: #4b5563;
-  --text-tertiary: #8a94a1;
-  --border: rgba(0, 0, 0, 0.08);
-  --live-red: #e0393c;
+/* Dark mode */
+[data-theme='dark'] {
+  --bg-primary: #0A0F0D;
+  --bg-secondary: #111916;
+  --bg-elevated: #16221E;
+  --card-bg: #111916;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #64748B;
+  --border: rgba(255, 255, 255, 0.08);
+  --accent-text: #22C55E;
+  --accent-btn: #15803D;
+  --accent-btn-text: #FFFFFF;
+  --accent-btn-hover: #166534;
+  --soft-green: rgba(34, 197, 94, 0.16);
+  --soft-green-text: #4ADE80;
+  --badge-bg: rgba(255, 255, 255, 0.06);
+  --badge-text: #94A3B8;
 
-  /* --accent itself stays the bright brand green (#00e676) everywhere,
-     because it's also used as a solid BUTTON BACKGROUND with dark text on
-     top (.btn--primary, active filter chips) — that pairing looks and
-     reads fine regardless of theme. But that same bright green used as
-     TEXT/link color on a white card has only ~1.7:1 contrast against
-     white, nowhere near WCAG AA's 4.5:1 minimum for text — effectively
-     invisible. --accent-text is the theme-aware color every "text is
-     green" usage (links, active nav state, stat values, CTA text) should
-     read from instead; only in light mode does it diverge from --accent. */
-  --accent-text: #00753a;
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 12px 32px rgba(0, 0, 0, 0.6);
 }

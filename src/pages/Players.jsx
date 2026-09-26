@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { FiSearch } from 'react-icons/fi';
+import { FiSearch, FiSliders } from 'react-icons/fi';
 import { useDebounce } from '../hooks/useDebounce';
 import { searchPlayers } from '../services/api/cricketApi';
 import PlayerCard from '../components/player/PlayerCard';
@@ -11,9 +11,11 @@ import EmptyState from '../components/common/EmptyState';
 import './Players.css';
 
 const PAGE_SIZE = 8;
+const ROLE_FILTERS = ['All', 'Batsman', 'Bowler', 'All-Rounder'];
 
 export default function Players() {
   const [term, setTerm] = useState('kohli');
+  const [roleFilter, setRoleFilter] = useState('All');
   const debouncedTerm = useDebounce(term, 400);
 
   const [players, setPlayers] = useState([]);
@@ -62,20 +64,50 @@ export default function Players() {
     }
   };
 
+  const filteredPlayers = useMemo(() => {
+    if (roleFilter === 'All') return players;
+    return players.filter((p) => {
+      const role = (p.role || '').toLowerCase();
+      if (roleFilter === 'Batsman') return role.includes('bat') || role.includes('wk');
+      if (roleFilter === 'Bowler') return role.includes('bowl');
+      if (roleFilter === 'All-Rounder') return role.includes('all') || role.includes('round');
+      return true;
+    });
+  }, [players, roleFilter]);
+
   return (
     <div className="container players-page">
-      <div className="players-page__head">
-        <h1>Players</h1>
-        <Link to="/players/compare" className="players-page__compare-link">Compare Players →</Link>
+      <div className="page-header players-page__head">
+        <div>
+          <h1 className="page-title">Players</h1>
+          <p className="page-subtitle">Discover and explore cricket players from around the world.</p>
+        </div>
+        <Link to="/players/compare" className="btn btn--outline btn--sm">
+          <FiSliders size={14} /> Compare Players
+        </Link>
       </div>
 
-      <div className="players-page__search">
-        <FiSearch size={16} />
-        <input
-          value={term}
-          onChange={(e) => setTerm(e.target.value)}
-          placeholder="Search players by name..."
-        />
+      <div className="players-page__controls">
+        <div className="players-page__search">
+          <FiSearch size={16} />
+          <input
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
+            placeholder="Search players by name (e.g. Kohli, Rohit, Bumrah)..."
+          />
+        </div>
+
+        <div className="players-page__filters">
+          {ROLE_FILTERS.map((r) => (
+            <button
+              key={r}
+              className={`filter-chip${roleFilter === r ? ' filter-chip--active' : ''}`}
+              onClick={() => setRoleFilter(r)}
+            >
+              {r}
+            </button>
+          ))}
+        </div>
       </div>
 
       {loading && (
@@ -86,20 +118,20 @@ export default function Players() {
 
       {!loading && error && <ErrorMessage message={error} onRetry={loadFirstPage} />}
 
-      {!loading && !error && !players.length && (
-        <EmptyState title="No players found" message="Try a different search term." />
+      {!loading && !error && !filteredPlayers.length && (
+        <EmptyState title="No players found" message="Try searching for a different player name or changing the role filter." />
       )}
 
-      {!loading && !error && players.length > 0 && (
+      {!loading && !error && filteredPlayers.length > 0 && (
         <>
           <div className="players-grid">
-            {players.map((p) => <PlayerCard key={p.id} player={p} />)}
+            {filteredPlayers.map((p) => <PlayerCard key={p.id} player={p} />)}
           </div>
 
-          {hasMore && (
+          {hasMore && roleFilter === 'All' && (
             <div className="players-page__load-more">
               <Button variant="outline" onClick={handleLoadMore} disabled={loadingMore}>
-                {loadingMore ? 'Loading…' : 'Load more'}
+                {loadingMore ? 'Loading…' : 'Load more players'}
               </Button>
             </div>
           )}

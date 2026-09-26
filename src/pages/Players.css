@@ -1,38 +1,38 @@
 .players-page {
-  padding: 32px 0 60px;
+  padding-bottom: 40px;
 }
 
 .players-page__head {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: flex-start;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 16px;
 }
 
-.players-page__head h1 {
-  font-size: 1.6rem;
-  font-weight: 800;
-}
-
-.players-page__compare-link {
-  color: var(--accent-text);
-  font-size: 0.85rem;
-  font-weight: 600;
+.players-page__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 
 .players-page__search {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: var(--bg-elevated);
+  gap: 12px;
+  background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-sm);
-  padding: 10px 14px;
-  margin-bottom: 24px;
-  max-width: 420px;
+  padding: 12px 16px;
+  max-width: 560px;
   color: var(--text-tertiary);
+  box-shadow: var(--shadow-card);
+  transition: border-color var(--transition-fast);
+}
+
+.players-page__search:focus-within {
+  border-color: var(--primary-green);
 }
 
 .players-page__search input {
@@ -40,21 +40,46 @@
   background: none;
   border: none;
   color: var(--text-primary);
-  font-size: 0.9rem;
+  font-size: 0.92rem;
 }
 
 .players-page__search input:focus {
   outline: none;
 }
 
+.players-page__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
 .players-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .players-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .players-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .players-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .players-page__load-more {
   display: flex;
   justify-content: center;
-  margin-top: 28px;
+  margin-top: 36px;
 }

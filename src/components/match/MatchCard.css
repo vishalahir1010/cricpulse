@@ -1,91 +1,195 @@
 .match-card {
-  display: block;
-  padding: 18px;
-  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.match-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(21, 128, 61, 0.35);
 }
 
 .match-card__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
+  gap: 8px;
 }
 
 .match-card__series {
-  font-size: 0.72rem;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-secondary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 70%;
+  max-width: 65%;
+}
+
+.match-card__format-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary-green);
+  flex-shrink: 0;
 }
 
 .live-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   font-size: 0.68rem;
   font-weight: 700;
-  color: var(--live-red);
+  color: #FFFFFF;
+  background: var(--live-red);
+  padding: 3px 8px;
+  border-radius: 12px;
   letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.25);
 }
 
 .match-card__tag {
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  color: var(--accent-text);
-  background: var(--accent-glow);
-  padding: 3px 8px;
-  border-radius: 20px;
+  color: var(--text-secondary);
+  background: var(--badge-bg);
+  padding: 3px 9px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .match-card__tag--done {
-  color: var(--text-tertiary);
-  background: var(--card-bg);
+  color: var(--text-secondary);
+  background: var(--badge-bg);
+}
+
+.match-card__tag--upcoming {
+  color: var(--primary-green);
+  background: var(--soft-green);
+}
+
+.match-card__teams {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .match-card__team {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 0;
+  gap: 12px;
 }
 
-.match-card__team-name {
+.match-card__team-identity {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  font-size: 0.92rem;
+  gap: 10px;
+  min-width: 0;
 }
 
 .match-card__team-logo {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--card-border);
+}
+
+.match-card__team-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--badge-bg);
+  color: var(--text-primary);
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--card-border);
+}
+
+.match-card__team-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .match-card__score {
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.match-card__equation {
+  background: var(--soft-green);
+  color: var(--soft-green-text);
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 14px;
+  line-height: 1.35;
+  border: 1px solid rgba(21, 128, 61, 0.15);
+}
+
+[data-theme='dark'] .match-card__equation {
+  background: rgba(34, 197, 94, 0.12);
+  color: #4ADE80;
+  border-color: rgba(34, 197, 94, 0.2);
 }
 
 .match-card__footer {
-  margin-top: 12px;
-  padding-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 14px;
   border-top: 1px solid var(--border);
-  font-size: 0.78rem;
-  color: var(--text-secondary);
+  gap: 12px;
 }
 
-.match-card__cta {
-  display: block;
-  margin-top: 10px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--accent-text);
+.match-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.match-card__venue,
+.match-card__date {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.match-card__btn {
+  flex-shrink: 0;
 }

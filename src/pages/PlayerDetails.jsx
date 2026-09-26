@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { FiHeart } from 'react-icons/fi';
+import { FiHeart, FiArrowLeft, FiUser } from 'react-icons/fi';
 import { useFetch } from '../hooks/useFetch';
 import { getPlayerDetails } from '../services/api/cricketApi';
 import { useAuth } from '../context/AuthContext';
@@ -11,9 +11,6 @@ import { MatchSkeleton } from '../components/common/Skeleton';
 import ErrorMessage from '../components/common/ErrorMessage';
 import './PlayerDetails.css';
 
-// Maps CricAPI players_info's battingStats/bowlingStats (odi/test/t20 keyed
-// objects) into the flat array PlayerStatsTable expects. Only formats the
-// API actually returned data for are shown — no invented rows.
 function buildStatsByFormat(player) {
   const formats = ['test', 'odi', 't20'];
   const labels = { test: 'Test', odi: 'ODI', t20: 'T20' };
@@ -72,32 +69,48 @@ export default function PlayerDetails() {
 
   return (
     <div className="container player-details-page">
-      <div className="player-details-header">
-        <img
-          src={player.playerImg || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(player.name)}&backgroundType=gradientLinear`}
-          alt={player.name}
-          className="player-details-header__img"
-        />
-        <div>
-          <h1>{player.name}</h1>
-          <p className="player-details-header__meta">
-            {player.country} {player.role ? `· ${player.role}` : ''}
+      <Link to="/players" className="match-details__back-link">
+        <FiArrowLeft size={16} /> Back to Players
+      </Link>
+
+      <div className="player-details-hero glass-card">
+        <div className="player-details-hero__avatar-wrap">
+          <img
+            src={player.playerImg || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(player.name)}&backgroundType=gradientLinear`}
+            alt={player.name}
+            className="player-details-hero__img"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(player.name)}&backgroundType=gradientLinear`;
+            }}
+          />
+        </div>
+        <div className="player-details-hero__info">
+          <h1 className="page-title">{player.name}</h1>
+          <p className="player-details-hero__meta">
+            <span>{player.country || 'International'}</span>
+            {player.role && <span className="player-details-hero__role-badge">{player.role}</span>}
           </p>
-          <button className="player-details-header__fav" onClick={handleFavorite}>
-            <FiHeart size={15} fill={favorited ? 'currentColor' : 'none'} />
+          <button
+            className={`btn btn--sm ${favorited ? 'btn--primary' : 'btn--outline'}`}
+            onClick={handleFavorite}
+          >
+            <FiHeart size={14} fill={favorited ? 'currentColor' : 'none'} />
             {favorited ? 'Favorited' : 'Favorite Player'}
           </button>
         </div>
       </div>
 
-      <h2 className="player-details-page__section-title">Career Stats</h2>
-      {statsByFormat.length > 0 ? (
-        <PlayerStatsTable statsByFormat={statsByFormat} />
-      ) : (
-        <p className="player-details-page__no-stats">
-          Detailed career stats aren't available for this player on the current plan.
-        </p>
-      )}
+      <div className="player-details-section">
+        <h2 className="player-details-section__title">Career Statistics</h2>
+        {statsByFormat.length > 0 ? (
+          <PlayerStatsTable statsByFormat={statsByFormat} />
+        ) : (
+          <p className="player-details-page__no-stats">
+            Detailed career stats aren't available for this player on the current plan.
+          </p>
+        )}
+      </div>
     </div>
   );
 }

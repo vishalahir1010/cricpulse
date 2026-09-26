@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { RECORDS, RECORDS_LAST_VERIFIED, RECORDS_SOURCE } from '../data/records';
 import StaticDataBanner from '../components/common/StaticDataBanner';
 import EmptyState from '../components/common/EmptyState';
+import { FiAward, FiTrendingUp, FiTarget } from 'react-icons/fi';
 import './Records.css';
 
 const CATEGORIES = [
@@ -15,12 +16,16 @@ const CATEGORIES = [
 ];
 
 export default function Records() {
-  const [category, setCategory] = useState(CATEGORIES[0]);
+  const [category, setCategory] = useState('Most Runs');
   const rows = RECORDS[category] || [];
 
   return (
     <div className="container records-page">
-      <h1>Records</h1>
+      <div className="page-header">
+        <h1 className="page-title">Cricket Records</h1>
+        <p className="page-subtitle">Explore historical milestones and greatest statistical achievements in cricket history.</p>
+      </div>
+
       <StaticDataBanner lastVerified={RECORDS_LAST_VERIFIED} source={RECORDS_SOURCE} />
 
       <div className="records-page__tabs">
@@ -36,21 +41,27 @@ export default function Records() {
       </div>
 
       {rows.length > 0 ? (
-        <div className="records-list">
+        <div className="records-grid">
           {rows.map((r, i) => (
-            <div key={i} className="glass-card records-list__item">
-              <div>
-                <strong>{r.player}</strong>
-                <span>{r.country} &middot; {r.format}</span>
+            <div key={i} className="record-stat-card glass-card">
+              <div className="record-stat-card__top">
+                <div className="record-stat-card__icon-wrap">
+                  <FiAward size={18} />
+                </div>
+                <span className="record-stat-card__format-tag">{r.format}</span>
               </div>
-              <span className="records-list__value">{r.value}</span>
+              <div className="record-stat-card__body">
+                <span className="record-stat-card__value">{r.value}</span>
+                <h3 className="record-stat-card__holder">{r.player}</h3>
+                <p className="record-stat-card__details">{r.country} · {category}</p>
+              </div>
             </div>
           ))}
         </div>
       ) : (
         <EmptyState
           title="Not verified yet"
-          message={`"${category}" needs a qualifier threshold (minimum innings/balls) that varies by source, so it wasn't included rather than risk showing a wrong number.`}
+          message={`"${category}" needs a qualifier threshold that varies by source. Checked against verified cricket records.`}
         />
       )}
     </div>

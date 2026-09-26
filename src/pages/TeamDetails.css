@@ -1,24 +1,37 @@
 .team-details-page {
-  padding: 32px 0 60px;
+  padding-bottom: 60px;
 }
 
-.team-details-header {
+.team-details-hero {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: 20px;
+  padding: 28px 32px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 24px;
 }
 
-.team-details-header__flag {
-  font-size: 3rem;
+.team-details-hero__flag-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--badge-bg);
+  border: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.team-details-header h1 {
-  font-size: 1.4rem;
-  font-weight: 800;
+.team-details-hero__flag {
+  font-size: 2.4rem;
+  line-height: 1;
 }
 
-.team-details-header__status {
-  font-size: 0.8rem;
-  color: var(--text-tertiary);
+.team-details-hero__status {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-green);
+  margin-top: 4px;
+  display: block;
 }

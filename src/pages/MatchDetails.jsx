@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useFetch } from '../hooks/useFetch';
 import { useInterval } from '../hooks/useInterval';
@@ -13,12 +13,25 @@ import WeatherCard from '../components/weather/WeatherCard';
 import { MatchSkeleton } from '../components/common/Skeleton';
 import ErrorMessage from '../components/common/ErrorMessage';
 import EmptyState from '../components/common/EmptyState';
-import { formatScore, formatMatchDate } from '../utils/formatters';
-import { FiBell, FiCheck } from 'react-icons/fi';
+import { formatScore, formatMatchDate, formatMatchTime } from '../utils/formatters';
+import { FiBell, FiCheck, FiArrowLeft, FiMapPin, FiCalendar } from 'react-icons/fi';
 import './MatchDetails.css';
 
 const TABS = ['Summary', 'Scorecard', 'Commentary', 'Stats', 'Squads', 'Weather'];
-const LIVE_POLL_INTERVAL_MS = 60_000; // matches getMatchDetails/getMatchScorecard TTL — see cricketApi.js
+const LIVE_POLL_INTERVAL_MS = 60_000;
+
+function TeamBadge({ name, img }) {
+  if (img) {
+    return <img src={img} alt={name || ''} className="match-header__team-logo" />;
+  }
+  const initials = (name || 'TBD')
+    .split(' ')
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+  return <div className="match-header__team-avatar">{initials}</div>;
+}
 
 export default function MatchDetails() {
   const { matchId } = useParams();
@@ -33,10 +46,6 @@ export default function MatchDetails() {
 
   const isLive = match?.matchStarted && !match?.matchEnded;
 
-  // Summary tab score, and the scorecard once opened, both refresh on
-  // their own while the match is actually live — paused automatically in
-  // background tabs by useInterval, and stopped entirely once the match
-  // ends so a finished match doesn't keep polling forever.
   useInterval(useCallback(() => refetch(), [refetch]), isLive ? LIVE_POLL_INTERVAL_MS : null);
 
   const { data: scorecard, loading: scorecardLoading, refetch: refetchScorecard } = useFetch(
@@ -64,16 +73,12 @@ export default function MatchDetails() {
       setFollowing(nowFollowing);
       toast.success(nowFollowing ? 'Following match' : 'Unfollowed match');
 
-      // Best-effort: offer push notifications right when following a match
-      // is the moment it's actually relevant, rather than a generic
-      // settings toggle nobody notices. Never blocks the follow action
-      // itself if permission is denied or the browser doesn't support it.
       if (nowFollowing && Notification?.permission === 'default') {
         try {
           const token = await enablePushNotifications(user.uid);
           if (token) toast.success('Score updates enabled for this match');
         } catch {
-          // Silently ignore — following the match itself already succeeded.
+          // ignore
         }
       }
     } catch {
@@ -97,45 +102,82 @@ export default function MatchDetails() {
     );
   }
 
-  const teamA = match.teams?.[0];
-  const teamB = match.teams?.[1];
+  const teamA = match.teams?.[0] || 'Team A';
+  const teamB = match.teams?.[1] || 'Team B';
+  const teamAInfo = match.teamInfo?.find((t) => t.name === teamA || t.shortname === teamA);
+  const teamBInfo = match.teamInfo?.find((t) => t.name === teamB || t.shortname === teamB);
+
   const scoreA = match.score?.find((s) => s.inning?.startsWith(teamA));
   const scoreB = match.score?.find((s) => s.inning?.startsWith(teamB));
 
   return (
     <div className="match-details-page">
-      <div className="match-header">
-        <div className="container">
-          <span className="match-header__series">{match.name}</span>
-          {isLive && (
-            <span className="match-header__live-badge">
-              <span className="live-dot" /> LIVE &middot; updating every 60s
-            </span>
+      <div className="container">
+        <Link to="/matches" className="match-details__back-link">
+          <FiArrowLeft size={16} /> Back to Matches
+        </Link>
+      </div>
+
+      <div className="container">
+        <div className="match-hero glass-card">
+          <div className="match-hero__top">
+            <div>
+              <span className="match-hero__series">{match.name}</span>
+              <div className="match-hero__meta">
+                {match.venue && (
+                  <span><FiMapPin size={13} /> {match.venue}</span>
+                )}
+                <span><FiCalendar size={13} /> {formatMatchDate(match.date)} {formatMatchTime(match.dateTimeGMT) ? `· ${formatMatchTime(match.dateTimeGMT)}` : ''}</span>
+              </div>
+            </div>
+
+            <div className="match-hero__actions">
+              {isLive && (
+                <span className="live-badge">
+                  <span className="live-dot" /> LIVE
+                </span>
+              )}
+              <button
+                className={`btn btn--sm ${following ? 'btn--primary' : 'btn--outline'}`}
+                onClick={handleFollow}
+              >
+                {following ? <FiCheck size={14} /> : <FiBell size={14} />}
+                {following ? 'Following' : 'Follow Match'}
+              </button>
+            </div>
+          </div>
+
+          <div className="match-hero__scoreboard">
+            <div className="match-hero__team">
+              <div className="match-hero__team-info">
+                <TeamBadge name={teamA} img={teamAInfo?.img} />
+                <span className="match-hero__team-name">{teamA}</span>
+              </div>
+              <div className="match-hero__team-score">
+                <strong>{formatScore(scoreA) || '—'}</strong>
+                {scoreA?.o && <span className="match-hero__overs">({scoreA.o} ov)</span>}
+              </div>
+            </div>
+
+            <div className="match-hero__vs">VS</div>
+
+            <div className="match-hero__team match-hero__team--right">
+              <div className="match-hero__team-info">
+                <TeamBadge name={teamB} img={teamBInfo?.img} />
+                <span className="match-hero__team-name">{teamB}</span>
+              </div>
+              <div className="match-hero__team-score">
+                <strong>{formatScore(scoreB) || '—'}</strong>
+                {scoreB?.o && <span className="match-hero__overs">({scoreB.o} ov)</span>}
+              </div>
+            </div>
+          </div>
+
+          {match.status && (
+            <div className="match-hero__status-banner">
+              <span>{match.status}</span>
+            </div>
           )}
-
-          <div className="match-header__teams">
-            <div className="match-header__team">
-              <span>{teamA}</span>
-              <strong>{formatScore(scoreA) || '-'}</strong>
-            </div>
-            <span className="match-header__vs">vs</span>
-            <div className="match-header__team">
-              <span>{teamB}</span>
-              <strong>{formatScore(scoreB) || '-'}</strong>
-            </div>
-          </div>
-
-          <p className="match-header__status">{match.status}</p>
-
-          <div className="match-header__meta">
-            <span>{match.venue}</span>
-            <span>{formatMatchDate(match.date)}</span>
-          </div>
-
-          <button className="match-header__follow" onClick={handleFollow}>
-            {following ? <FiCheck size={15} /> : <FiBell size={15} />}
-            {following ? 'Following' : 'Follow Match'}
-          </button>
         </div>
       </div>
 
@@ -160,12 +202,16 @@ export default function MatchDetails() {
                 <strong>{scoreA?.o ? (scoreA.r / scoreA.o).toFixed(2) : '-'}</strong>
               </div>
               <div className="glass-card summary-stat">
-                <span>Overs</span>
+                <span>Team A Overs</span>
                 <strong>{scoreA?.o ?? '-'}</strong>
               </div>
               <div className="glass-card summary-stat">
-                <span>Format</span>
-                <strong>{match.matchType?.toUpperCase()}</strong>
+                <span>Match Format</span>
+                <strong>{match.matchType?.toUpperCase() || 'CRICKET'}</strong>
+              </div>
+              <div className="glass-card summary-stat">
+                <span>Status</span>
+                <strong style={{ fontSize: '1rem' }}>{match.status || 'Scheduled'}</strong>
               </div>
             </div>
           )}
@@ -192,6 +238,9 @@ export default function MatchDetails() {
               {!scorecardLoading && !scorecard && (
                 <EmptyState title="Stats not available" message="Detailed match stats need the scorecard feed, which is empty for this match." />
               )}
+              {!scorecardLoading && scorecard?.scorecard?.map((inning, i) => (
+                <ScorecardTable key={i} inning={inning} />
+              ))}
             </>
           )}
 

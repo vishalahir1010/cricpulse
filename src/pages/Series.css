@@ -1,15 +1,29 @@
 .series-page {
-  padding: 32px 0 60px;
+  padding-bottom: 40px;
 }
 
-.series-page__title {
-  font-size: 1.6rem;
-  font-weight: 800;
-  margin-bottom: 24px;
+.series-page__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+  align-items: center;
 }
 
 .series-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .series-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .series-grid {
+    grid-template-columns: 1fr;
+  }
 }

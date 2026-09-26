@@ -2,53 +2,165 @@
   padding: 32px 0 60px;
 }
 
-.search-page h1 {
-  font-size: 1.6rem;
-  font-weight: 800;
-  margin-bottom: 20px;
-}
-
 .search-page__box {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-sm);
-  padding: 12px 16px;
-  margin-bottom: 28px;
-  color: var(--text-tertiary);
+  gap: 12px;
+  background: var(--color-card, #ffffff);
+  border: 1px solid var(--color-border, #E2E8F0);
+  border-radius: var(--radius-md, 12px);
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.04));
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.search-page__box:focus-within {
+  border-color: var(--color-primary-green, #15803D);
+  box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.12);
+}
+
+.search-page__search-icon {
+  color: var(--color-text-secondary, #64748B);
+  flex-shrink: 0;
 }
 
 .search-page__box input {
   flex: 1;
   background: none;
   border: none;
-  color: var(--text-primary);
-  font-size: 0.95rem;
+  color: var(--color-text-primary, #111827);
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 500;
 }
 
 .search-page__box input:focus {
   outline: none;
 }
 
-.search-section {
+.search-page__box input::placeholder {
+  color: var(--color-text-muted, #94A3B8);
+  font-weight: 400;
+}
+
+.search-page__clear {
+  background: var(--color-bg-alt, #F1F5F9);
+  border: none;
+  color: var(--color-text-secondary, #64748B);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full, 9999px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.search-page__clear:hover {
+  background: var(--color-border, #E2E8F0);
+  color: var(--color-text-primary, #111827);
+}
+
+.search-page__tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
   margin-bottom: 32px;
 }
 
-.search-section h2 {
-  font-size: 1rem;
+.search-results-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.search-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.search-section__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border, #E2E8F0);
+}
+
+.search-section__icon {
+  color: var(--color-primary-green, #15803D);
+}
+
+.search-section__head h2 {
+  font-size: 1.05rem;
   font-weight: 700;
-  margin-bottom: 14px;
-  color: var(--text-secondary);
+  color: var(--color-text-primary, #111827);
+  margin: 0;
 }
 
 .search-section__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
 }
 
 .search-section__grid--players {
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.search-teams-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.search-team-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: var(--color-card, #ffffff);
+  border: 1px solid var(--color-border, #E2E8F0);
+  border-radius: var(--radius-md, 14px);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.search-team-item:hover {
+  border-color: var(--color-primary-green, #15803D);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.05));
+}
+
+.search-team-item__flag {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.search-team-item__name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text-primary, #111827);
+  flex: 1;
+}
+
+.search-team-item__status {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary, #64748B);
+  background: var(--color-bg-alt, #F1F5F9);
+  padding: 4px 8px;
+  border-radius: var(--radius-full, 9999px);
+}
+
+@media (max-width: 640px) {
+  .search-section__grid,
+  .search-section__grid--players,
+  .search-teams-list {
+    grid-template-columns: 1fr;
+  }
 }

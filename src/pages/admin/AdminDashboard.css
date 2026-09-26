@@ -4,26 +4,40 @@
 
 .admin-dashboard h1 {
   font-size: 1.6rem;
-  font-weight: 800;
+  font-weight: 700;
+  color: var(--color-text-primary, #111827);
   margin-bottom: 20px;
 }
 
 .admin-dashboard__tabs {
   display: flex;
-  gap: 4px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 24px;
+  gap: 8px;
+  border-bottom: 1px solid var(--color-border, #E2E8F0);
+  margin-bottom: 28px;
+  overflow-x: auto;
 }
 
 .admin-dashboard__tab {
-  padding: 10px 16px;
-  font-size: 0.85rem;
+  padding: 10px 18px;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: var(--text-tertiary);
+  color: var(--color-text-secondary, #64748B);
   border-bottom: 2px solid transparent;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.admin-dashboard__tab:hover {
+  color: var(--color-primary-green, #15803D);
 }
 
 .admin-dashboard__tab--active {
-  color: var(--accent-text);
-  border-bottom-color: var(--accent);
+  color: var(--color-primary-green, #15803D) !important;
+  border-bottom-color: var(--color-primary-green, #15803D) !important;
+  font-weight: 700;
+}
+
+.admin-dashboard__content {
+  min-height: 400px;
 }
